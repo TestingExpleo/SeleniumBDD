@@ -1,0 +1,29 @@
+@CucumberOptions(
+features="./features",
+glue={"com.testautomation.StepDef"},
+tags={"@UATTesting-note(infeatures file given name need to be integrated"},pulgin={"pretty","html:targe/site/cucumber-pretty","json:target/cucumber.json"},monochrome=true)
+public class TestRunner{
+Private TestNGCucumberRunner testNGCucumberRunner;
+
+@BeforeClass(alwaysRun=true)
+public void setUpClass() throws Exception
+{
+testNGCucumberRunner =new TestNGCucumberRunner(this.getClass());
+}
+
+@Test(dataProvider="features")
+public void feature(CucumberFeatureWrapper cucumberFeature)
+{
+testNGCucumberRunner.runCucumber(cucumberFeature.getCucumberFeature());
+}
+
+@Dataprovider
+public object[][] features()
+{
+return testNGCucumberRunner.provideFeatures();
+}
+
+@AfterClass(alwaysRun = true)
+public void tearDownClass() throws Exception{
+testNGCucumberRunner.finish();
+}}
